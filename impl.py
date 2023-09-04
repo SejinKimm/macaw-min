@@ -72,23 +72,39 @@ def build_networks_and_buffers(args, env, task_config):
         w_linear=args.weight_transform,
     ).to(args.device)
 
-    buffer_paths = [
+    train_buffer_paths = [
         task_config.train_buffer_paths.format(idx) for idx in task_config.train_tasks
     ]
 
-    buffers = [
+    test_buffer_paths = [
+        task_config.test_buffer_paths.format(idx) for idx in task_config.test_tasks
+    ]
+
+    train_buffers = [
         ReplayBuffer(
             args.inner_buffer_size,
             obs_dim,
             action_dim,
             discount_factor=0.99,
             immutable=True,
-            load_from=buffer_paths[i],
+            load_from=train_buffer_paths[i],
         )
         for i, task in enumerate(task_config.train_tasks)
     ]
 
-    return policy, vf, buffers
+    test_buffers = [
+        ReplayBuffer(
+            args.inner_buffer_size,
+            obs_dim,
+            action_dim,
+            discount_factor=0.99,
+            immutable=True,
+            load_from=test_buffer_paths[i],
+        )
+        for i, task in enumerate(task_config.test_tasks)
+    ]
+
+    return policy, vf, train_buffers, test_buffers
 
 
 def get_env(args, task_config):
@@ -98,11 +114,10 @@ def get_env(args, task_config):
             task_info = pickle.load(f)
             assert len(task_info) == 1, f"Unexpected task info: {task_info}"
             tasks.append(task_info[0])
-
     if args.advantage_head_coef == 0:
         args.advantage_head_coef = None
 
-    return HalfCheetahDirEnv(tasks, include_goal=False)
+    return HalfCheetahDirEnv(tasks=tasks, include_goal=False)
 
 
 def get_opts_and_lrs(args, policy, vf):
@@ -128,20 +143,25 @@ def run(args):
         )
 
     env = get_env(args, task_config)
-    policy, vf, task_buffers = build_networks_and_buffers(args, env, task_config)
+    print("@@@@@@@@@@@@@@ TASK from ENV :", env.tasks)
+    print("@@@@@@@@@@@@@@ GOAL_DIRECTION:", env._goal_dir)
+
+    policy, vf, train_task_buffers, test_task_buffers = build_networks_and_buffers(args, env, task_config)
     policy_opt, vf_opt, policy_lrs, vf_lrs = get_opts_and_lrs(args, policy, vf)
 
     for train_step_idx in count(start=1):
         if train_step_idx % args.rollout_interval == 0:
             LOG.info(f"Train step {train_step_idx}")
 
-        for i, (train_task_idx, task_buffer) in enumerate(
-            zip(task_config.train_tasks, task_buffers)
+        for i, (train_task_idx, task_buffers) in enumerate(
+            zip(task_config.train_tasks, train_task_buffers)
         ):
-            inner_batch = task_buffer.sample(
+            env.set_task_idx(train_task_idx)
+
+            inner_batch = task_buffers.sample(
                 args.inner_batch_size, return_dict=True, device=args.device
             )
-            outer_batch = task_buffer.sample(
+            outer_batch = task_buffers.sample(
                 args.outer_batch_size, return_dict=True, device=args.device
             )
 
@@ -180,9 +200,9 @@ def run(args):
                 (meta_policy_loss / len(task_config.train_tasks)).backward()
 
                 # Sample adapted policy trajectory
-                if train_step_idx % args.rollout_interval == 0:
-                    adapted_trajectory, adapted_reward, success = rollout_policy(f_policy, env)
-                    LOG.info(f"Task {train_task_idx} reward: {adapted_reward}")
+                # if train_step_idx % args.rollout_interval == 0:
+                #     adapted_trajectory, adapted_reward, success = rollout_policy(f_policy, env)
+                #     LOG.info(f"Task {train_task_idx} reward: {adapted_reward}")
 
         # Update the policy/value function
         policy_opt.step()
@@ -190,6 +210,13 @@ def run(args):
         vf_opt.step()
         vf_opt.zero_grad()
 
+        if train_step_idx % args.rollout_interval == 0:
+            for j, (test_task_idx, task_buffers) in enumerate(
+                zip(task_config.test_tasks, test_task_buffers)
+            ):
+                env.set_task_idx(test_task_idx)
+                adapted_trajectory, adapted_reward, success = rollout_policy(policy, env)
+                LOG.info(f"Task {test_task_idx} reward: {adapted_reward}")
 
 if __name__ == "__main__":
     run()

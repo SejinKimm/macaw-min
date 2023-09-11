@@ -2,23 +2,20 @@ import pickle
 import h5py
 import numpy as np
 
-with open("/home/sjkim/macaw/macaw_offline_data/cheetah_dir/env_cheetah_dir_train_task0.pkl", "rb") as f:
-    print(pickle.load(f))
+# with open("/home/sjkim/macaw/macaw_offline_data/cheetah_dir/env_cheetah_dir_train_task0.pkl", "rb") as f:
+#     print(pickle.load(f))
     
 
-with h5py.File("/home/sjkim/macaw/macaw_offline_data/cheetah_dir/buffers_cheetah_dir_train_0_sub_task_0.hdf5", "r") as f:
-    # print("Keys: %s" % f.keys())
+with h5py.File("/home/sjkim/macaw-min/macaw_offline_data/arc/buffers_arc_train_l6aebhyhb7kavxvpv69_sub_task_0.hdf5", "r") as f:
+    print("Keys: %s" % f.keys())
 
-    # for key in f.keys():
-    #     arr = np.array(f[key])
-    #     print(key, "with shape:", arr.shape)
-    #     if arr.ndim == 0:
-    #         print(arr[()])
-    #     else:
-    #         print(arr[0])
-    #         print(arr[1])
-    #         print(arr[2])
-    #         print(arr[3])
+    for key in f.keys():
+        arr = np.array(f[key])
+        print(key, "with shape:", arr.shape)
+        if arr.ndim == 0:
+            print(arr[()])
+        else:
+            print(arr)
 
     rewards = np.array(f['rewards'])
     mc_rewards = np.array(f['mc_rewards'])

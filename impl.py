@@ -12,7 +12,6 @@ from typing import List
 import higher
 from itertools import count
 import logging
-
 from utils import Experience
 from losses import policy_loss_on_batch, vf_loss_on_batch
 
@@ -58,6 +57,7 @@ def rollout_policy(policy: MLP, env, render: bool = False) -> List[Experience]:
 def build_networks_and_buffers(args, env, task_config):
     obs_dim = env.observation_space.shape[0]
     action_dim = env.action_space.shape[0]
+    print("!!!!!!!!!! OBS_DIM:", obs_dim, "ACTION_DIM:", action_dim)
 
     policy_head = [32, 1] if args.advantage_head_coef is not None else None
     policy = MLP(

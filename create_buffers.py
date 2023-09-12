@@ -115,7 +115,16 @@ def create_features(task_dict):
                 terminal_obs[cnt] = obs_terminal.copy()
                 actions[cnt] = action_convert(traces[id][i])
 
-                if i == last_actions:
+                isTerminal = True
+                for x in range(30):
+                    for y in range(30):
+                        if obs[cnt][x][y] != obs_terminal[x][y]:
+                            isTerminal = False
+                            break
+                    if not isTerminal:
+                        break
+
+                if isTerminal:
                     terminals[cnt] = True
                     rewards[cnt] = 1 # sparse rewards 
                     mc_rewards[cnt] = rewards[cnt]

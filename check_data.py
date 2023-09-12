@@ -6,7 +6,7 @@ import numpy as np
 #     print(pickle.load(f))
     
 
-with h5py.File("/home/sjkim/macaw-min/macaw_offline_data/arc/buffers_arc_train_l6aebhyhb7kavxvpv69_sub_task_0.hdf5", "r") as f:
+with h5py.File("/home/sjkim/macaw-min/macaw_offline_data/arc/buffers_arc_train_794b24be_sub_task_0.hdf5", "r") as f:
     print("Keys: %s" % f.keys())
 
     for key in f.keys():
@@ -19,7 +19,7 @@ with h5py.File("/home/sjkim/macaw-min/macaw_offline_data/arc/buffers_arc_train_l
 
     rewards = np.array(f['rewards'])
     mc_rewards = np.array(f['mc_rewards'])
-    start_idx, end_idx = -30, -1
+    start_idx, end_idx = 0, -1
     if start_idx == 0:
         rewards_sum = 0
     else:

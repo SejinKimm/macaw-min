@@ -125,6 +125,7 @@ def create_features(task_dict):
                         break
 
                 if isTerminal:
+                    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", id, task_no, subtask_no)
                     terminals[cnt] = True
                     rewards[cnt] = 1 # sparse rewards 
                     mc_rewards[cnt] = rewards[cnt]

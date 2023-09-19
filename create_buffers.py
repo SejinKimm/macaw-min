@@ -7,8 +7,8 @@ from arcle.loaders import ARCLoader, Loader, MiniARCLoader
 import gymnasium as gym
 
 
-arcenv = gym.make('ARCLE/O2ARCv2Env-v0',render_mode='ansi',data_loader= ARCLoader(), max_grid_size=(30,30), colors = 10, max_episode_steps=None)
-minienv = gym.make('ARCLE/O2ARCv2Env-v0',render_mode='ansi', data_loader=MiniARCLoader(), max_grid_size=(30,30), colors = 10, max_episode_steps=None)
+arcenv = gym.make('ARCLE/O2ARCv2Env-v0',render_mode=None, data_loader= ARCLoader(), max_grid_size=(30,30), colors = 10, max_episode_steps=None)
+minienv = gym.make('ARCLE/O2ARCv2Env-v0',render_mode=None, data_loader=MiniARCLoader(), max_grid_size=(30,30), colors = 10, max_episode_steps=None)
 
 failure_trace = []
 
@@ -115,6 +115,7 @@ def create_features(task_dict):
                 terminal_obs[cnt] = obs_terminal.copy()
                 actions[cnt] = action_convert(traces[id][i])
 
+                print("!!!!!!!!!", traces[id][i][:-1])
                 isTerminal = True
                 for x in range(30):
                     for y in range(30):
@@ -125,7 +126,7 @@ def create_features(task_dict):
                         break
 
                 if isTerminal:
-                    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", id, task_no, subtask_no)
+                    #print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", id, task_no, subtask_no)
                     terminals[cnt] = True
                     rewards[cnt] = 1 # sparse rewards 
                     mc_rewards[cnt] = rewards[cnt]

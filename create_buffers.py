@@ -115,7 +115,7 @@ def create_features(task_dict):
                 terminal_obs[cnt] = obs_terminal.copy()
                 actions[cnt] = action_convert(traces[id][i])
 
-                print("!!!!!!!!!", traces[id][i][:-1])
+                #print("!!!!!!!!!", traces[id][i][:-1])
                 isTerminal = True
                 for x in range(30):
                     for y in range(30):

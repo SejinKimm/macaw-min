@@ -57,9 +57,15 @@ def rollout_policy(policy: MLP, env, render: bool = False) -> List[Experience]:
 
 def build_networks_and_buffers(args, env, task_config):
     print("#################", env.traces)
-    obs, info = env.reset(options= {'adaptation':False, 'prob_index':env.findbyname(env.traces_info[0][0]), 'subprob_index': env.traces_info[0][1]})
-    obs_dim = env.observation_space.shape[0]
-    action_dim = env.action_space.shape[0]
+    # try:
+    #     env.arcenv.reset(options= {'adaptation':False, 'prob_index':env.findbyname(env.traces_info[0][0]), 'subprob_index': env.traces_info[0][1]})
+    # except:
+    #     print("!!!!!!!!!!!!!!!!!!!!!!! ERROR")
+    #     return
+    # obs_dim = env.arcenv.observation_space.shape[0]
+    # action_dim = env.arcenv.action_space.shape[0]
+    obs_dim = 900
+    action_dim = 1
 
     policy_head = [32, 1] if args.advantage_head_coef is not None else None
     policy = MLP(

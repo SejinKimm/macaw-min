@@ -71,6 +71,7 @@ def action_convert(action_entry):
 def create_features(task_dict):
 
     discount_factor = 0.99
+    file_no = 0
     for task in task_dict.keys():
         id_list, obs_init_list = zip(*task_dict[task])
         task_no, subtask_no = task.split('_')
@@ -138,7 +139,13 @@ def create_features(task_dict):
                 obs_after = obs_before.copy()
                 cnt += 1
         
-        with h5py.File('/home/sjkim/macaw-min/macaw_offline_data/arc/buffers_arc_train_%s_sub_task_%s.hdf5' % (task_no, subtask_no), 'w') as f:
+        with open("/home/sjkim/macaw-min/macaw_offline_data/arc/env_arc_train_task%d.pkl" % (file_no), "wb") as f:
+            li = [{}]
+            li[0]['task_no'] = task_no
+            li[0]['subtask_no'] = subtask_no
+            pickle.dump(li, f, pickle.HIGHEST_PROTOCOL)
+
+        with h5py.File('/home/sjkim/macaw-min/macaw_offline_data/arc/buffers_arc_train_%d_sub_task_0.hdf5' % (file_no), 'w') as f:
             f.create_dataset('obs', data=obs.reshape(cnt, 900), maxshape = (cnt, 900))
             f.create_dataset('next_obs', data=next_obs.reshape(cnt, 900), maxshape = (cnt, 900))
             f.create_dataset('terminal_obs', data=terminal_obs.reshape(cnt, 900), maxshape = (cnt, 900))
@@ -149,7 +156,8 @@ def create_features(task_dict):
             f.create_dataset('mc_rewards', data=mc_rewards, maxshape = (cnt, 1))
             f.create_dataset('discount_factor', data=discount_factor, maxshape = ())
             f.create_dataset('terminal_discounts', data=terminal_discounts, maxshape = (cnt, 1))
-
+        
+        file_no += 1
 
 if __name__ == "__main__":
     traces = []

@@ -19,6 +19,7 @@ class ArcEnv(gym.Env):
         #self.set_task_idx(0)
         self._max_episode_steps = 200
         self.traces = []
+
         
     def _get_obs(self):
         if self.include_goal:
@@ -35,6 +36,13 @@ class ArcEnv(gym.Env):
             obs = super()._get_obs()
         return obs
     
+    def findbyname(self, name):
+        for i, aa in enumerate(ARCLoader().data):
+            if aa[4]['id'] == name:
+                return i
+        for i, aa in enumerate(MiniARCLoader().data):
+            if aa[4]['id'] == name:
+                return i
     # def set_task(self, task):
     #     self._task = task
     #     self._goal_dir = self._task['direction']

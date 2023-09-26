@@ -4,7 +4,6 @@ import numpy as np
 
 # with open("/home/sjkim/macaw/macaw_offline_data/cheetah_dir/env_cheetah_dir_train_task0.pkl", "rb") as f:
 #     print(pickle.load(f))
-    
 
 with h5py.File("/home/sjkim/macaw-min/macaw_offline_data/arc/buffers_arc_train_0ca9ddb6_sub_task_0.hdf5", "r") as f:
     print("Keys: %s" % f.keys())

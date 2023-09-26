@@ -1,0 +1,15 @@
+outer_policy_lr: 0.0001
+outer_value_lr: 1.0e-05
+inner_policy_lr: 0.001
+inner_value_lr: 0.001
+inner_buffer_size: -1
+outer_buffer_size: -1
+weight_transform: true
+task_config: task_config/arc.json
+advantage_head_coef: 0.001
+net_width: 128
+net_depth: 3
+device: cuda
+outer_batch_size: 4
+inner_batch_size: 4
+rollout_interval: 250

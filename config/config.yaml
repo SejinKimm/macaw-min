@@ -10,6 +10,6 @@ advantage_head_coef: 1e-3
 net_width: 128
 net_depth: 3
 device: cuda
-outer_batch_size: 256
-inner_batch_size: 256
+outer_batch_size: 4
+inner_batch_size: 4
 rollout_interval: 250

@@ -171,9 +171,8 @@ def run(args):
         if train_step_idx % args.rollout_interval == 0:
             LOG.info(f"Train step {train_step_idx}")
 
-        for i, (train_task_idx, task_buffers) in enumerate(
-            zip(task_config.train_tasks, train_task_buffers)
-        ):
+        for train_task_idx, task_buffers in enumerate(train_task_buffers):
+            print("!!!!!!!!!!!!!!! TRAIN_TASK_IDX:", train_task_idx)
             env.set_task_idx(train_task_idx)
 
             inner_batch = task_buffers.sample(
@@ -201,6 +200,7 @@ def run(args):
             with higher.innerloop_ctx(
                 policy, opt, override={"lr": policy_lrs}, copy_initial_weights=False
             ) as (f_policy, diff_policy_opt):
+                print("!!!!!!!!!!!!!! POLICY LOSS")
                 loss = policy_loss_on_batch(
                     f_policy,
                     adapted_vf,
@@ -210,7 +210,7 @@ def run(args):
                 )
 
                 diff_policy_opt.step(loss)
-
+                print("!!!!!!!!!!!!!! META POLICY LOSS")
                 meta_policy_loss = policy_loss_on_batch(
                     f_policy, adapted_vf, outer_batch, args.advantage_head_coef
                 )

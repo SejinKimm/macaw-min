@@ -280,6 +280,8 @@ class ReplayBuffer(object):
             idx = np.random.randint(0, self._stored_steps - batch_size)
             idxs = slice(idx, idx + batch_size)
         else:
+            print("!!!!!!!!!!!!!!!SELF._STORED_STEPS:", self._stored_steps)
+            print("!!!!!!!!!!!!!!!BATCH_SIZE:", batch_size)
             idxs = np.array(random.sample(range(self._stored_steps), batch_size))
         #idxs = np.random.choice(self._valid, batch_size)
 

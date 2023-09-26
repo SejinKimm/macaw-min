@@ -18,7 +18,6 @@ class ArcEnv(gym.Env):
         self.traces_info = traces_info
         #self.set_task_idx(0)
         self._max_episode_steps = 200
-        self.traces = []
 
         
     def _get_obs(self):

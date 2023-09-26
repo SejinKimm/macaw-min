@@ -56,7 +56,7 @@ def rollout_policy(policy: MLP, env, render: bool = False) -> List[Experience]:
 
 
 def build_networks_and_buffers(args, env, task_config):
-    print("#################", env.traces)
+    # print("#################", env.traces)
     # try:
     #     env.arcenv.reset(options= {'adaptation':False, 'prob_index':env.findbyname(env.traces_info[0][0]), 'subprob_index': env.traces_info[0][1]})
     # except:
@@ -80,12 +80,9 @@ def build_networks_and_buffers(args, env, task_config):
         w_linear=args.weight_transform,
     ).to(args.device)
 
+    s, e = map(int, task_config.train_tasks)
     train_buffer_paths = [
-        task_config.train_buffer_paths.format(idx) for idx in task_config.train_tasks
-    ]
-
-    test_buffer_paths = [
-        task_config.test_buffer_paths.format(idx) for idx in task_config.test_tasks
+        task_config.train_buffer_paths.format(idx) for idx in range(s, e)
     ]
 
     train_buffers = [
@@ -95,9 +92,14 @@ def build_networks_and_buffers(args, env, task_config):
             action_dim,
             discount_factor=0.99,
             immutable=True,
-            load_from=train_buffer_paths[i],
+            load_from=train_buffer,
         )
-        for i, task in enumerate(task_config.train_tasks)
+        for train_buffer in train_buffer_paths
+    ]
+    
+    s, e = map(int, task_config.test_tasks)
+    test_buffer_paths = [
+        task_config.test_buffer_paths.format(idx) for idx in range(s, e)
     ]
 
     test_buffers = [
@@ -107,9 +109,9 @@ def build_networks_and_buffers(args, env, task_config):
             action_dim,
             discount_factor=0.99,
             immutable=True,
-            load_from=test_buffer_paths[i],
+            load_from=test_buffer,
         )
-        for i, task in enumerate(task_config.test_tasks)
+        for test_buffer in test_buffer_paths
     ]
 
     return policy, vf, train_buffers, test_buffers
@@ -124,16 +126,16 @@ def get_env(args, task_config):
     #         tasks.append(task_info[0])
     # if args.advantage_head_coef == 0:
     #     args.advantage_head_coef = None  
-    with open('/home/sjkim/macaw-min/test.pickle', 'rb') as fp:
+    with open(task_config.traces, 'rb') as fp:
         traces:List = pickle.load(fp)
-    with open('/home/sjkim/macaw-min/test_info.pickle', 'rb') as fp:
+    with open(task_config.traces_info, 'rb') as fp:
         traces_info:List = pickle.load(fp)
-    print("!!!!!!!!!!!!!!!!! LEN:", len(traces))
-    for i in range(len(traces[5])):
-        print("!!!!!!!!!!!!!!!!! IDX:", i)
-        print(traces[5][i])
+    # print("!!!!!!!!!!!!!!!!! LEN:", len(traces))
+    # for i in range(len(traces[5])):
+    #     print("!!!!!!!!!!!!!!!!! IDX:", i)
+    #     print(traces[5][i])
 
-    return ArcEnv(traces=traces, traces_info=traces_info, include_goal=False)
+    return ArcEnv(traces=traces, traces_info=traces_info, include_goal=True)
 
 
 def get_opts_and_lrs(args, policy, vf):
@@ -157,10 +159,10 @@ def run(args):
         task_config = json.load(
             f, object_hook=lambda d: namedtuple("X", d.keys())(*d.values())
         )
-
+    # print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TASK_CONFIG:", task_config)
     env = get_env(args, task_config)
-    #print("@@@@@@@@@@@@@@ TASK from ENV :", env.tasks)
-    #print("@@@@@@@@@@@@@@ GOAL_DIRECTION:", env._goal_dir)
+    # print("@@@@@@@@@@@@@@ TRACES :", env.traces[5])
+    # print("@@@@@@@@@@@@@@ GOAL_DIRECTION:", env._goal_dir)
 
     policy, vf, train_task_buffers, test_task_buffers = build_networks_and_buffers(args, env, task_config)
     policy_opt, vf_opt, policy_lrs, vf_lrs = get_opts_and_lrs(args, policy, vf)

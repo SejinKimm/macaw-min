@@ -116,6 +116,7 @@ class ReplayBuffer(object):
         needs_to_load = True
         size //= skip
         if stream_to_disk:
+            print("!!!!!!!PATH:", load_from)
             name = os.path.splitext(os.path.basename(os.path.normpath(load_from)))[0]
             if os.path.exists('/scr-ssd'):
                 path = f'/scr-ssd/em7/{name}'
@@ -158,7 +159,7 @@ class ReplayBuffer(object):
             self._actions = np.full((size, action_dim), float('nan'), dtype=np.float32)
             self._rewards = np.full((size, 1), float('nan'), dtype=np.float32)
             self._mc_rewards = np.full((size, 1), float('nan'), dtype=np.float32)
-            self._terminals = np.full((size, 1), False, dtype=np.bool)
+            self._terminals = np.full((size, 1), False, dtype=np.bool_)
             self._terminal_obs = np.full((size, obs_dim), float('nan'), dtype=np.float32)
             self._terminal_discounts = np.full((size, 1), float('nan'), dtype=np.float32)
             self._next_obs = np.full((size, obs_dim), float('nan'), dtype=np.float32)
@@ -209,7 +210,8 @@ class ReplayBuffer(object):
 
             f.close()
 
-        self._write_location = self._stored_steps % self._size
+        if self._size > 0:
+            self._write_location = self._stored_steps % self._size
         #self._valid = np.where(np.logical_and(~np.isnan(self._terminal_discounts[:,0]), self._terminal_discounts[:,0] < 0.35))[0]
 
     @property

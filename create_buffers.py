@@ -180,6 +180,4 @@ if __name__ == "__main__":
         
         task_dict[name].append((idx, obs_init))
 
-
     create_features(task_dict)
-

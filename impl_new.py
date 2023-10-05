@@ -16,15 +16,18 @@ from losses import policy_loss_on_batch, vf_loss_on_batch
 from envs_arc import ArcEnv
 from arcle.loaders import ARCLoader, Loader, MiniARCLoader
 import gymnasium as gym
+import numpy as np
 
 LOG = logging.getLogger(__name__)
 
 
 def rollout_policy(policy: MLP, env, render: bool = False) -> List[Experience]:
     trajectory = []
-    state = env.reset()
+    idx = env.get_idx()
+    # print("!!!!!!!!!!!!!ROLLOUT POLICY IDX:", idx)
+    state = env.arcenv.reset(options= {'adaptation':False, 'prob_index':env.findbyname(env.traces_info[idx][0]), 'subprob_index': env.traces_info[idx][1]})
     if render:
-        env.render()
+        env.arcenv.render()
     done = False
     total_reward = 0
     episode_t = 0
@@ -33,18 +36,28 @@ def rollout_policy(policy: MLP, env, render: bool = False) -> List[Experience]:
     current_device = list(policy.parameters())[-1].device
     while not done:
         with torch.no_grad():
-            action = policy(torch.tensor(state).to(current_device).float()).squeeze()
-
+            if len(state) == 2:
+                action = policy(torch.tensor(state[0]['selected'].reshape(1, -1)).to(current_device).float()).squeeze()
+            else:
+                action = policy(torch.tensor(state['selected'].reshape(1, -1)).to(current_device).float()).squeeze()
             np_action = action.squeeze().cpu().numpy()
-            np_action = np_action.clip(min=env.action_space.low, max=env.action_space.high)
+            # print(np_action)
+            try:
+                np_action = int(np.interp(np_action, (-1, 1), (1, 34)))
+            except:
+                np_action = 1
 
-        next_state, reward, done, info_dict = env.step(np_action)
+        action = dict()
+        action['operation'] = np_action
+        action['selection'] = np.zeros((30,30), dtype=np.bool_)
+
+        next_state, reward, done, _, info_dict = env.arcenv.step(action)
 
         if "success" in info_dict and info_dict["success"]:
             success = True
 
         if render:
-            env.render()
+            env.arcenv.render()
         trajectory.append(Experience(state, np_action, next_state, reward, done))
         state = next_state
         total_reward += reward
@@ -56,14 +69,6 @@ def rollout_policy(policy: MLP, env, render: bool = False) -> List[Experience]:
 
 
 def build_networks_and_buffers(args, env, task_config):
-    # print("#################", env.traces)
-    # try:
-    #     env.arcenv.reset(options= {'adaptation':False, 'prob_index':env.findbyname(env.traces_info[0][0]), 'subprob_index': env.traces_info[0][1]})
-    # except:
-    #     print("!!!!!!!!!!!!!!!!!!!!!!! ERROR")
-    #     return
-    # obs_dim = env.arcenv.observation_space.shape[0]
-    # action_dim = env.arcenv.action_space.shape[0]
     obs_dim = 900
     action_dim = 1
 
@@ -82,36 +87,36 @@ def build_networks_and_buffers(args, env, task_config):
 
     s, e = map(int, task_config.train_tasks)
     train_buffer_paths = [
-        task_config.train_buffer_paths.format(idx) for idx in range(s, e)
+        (idx, task_config.train_buffer_paths.format(idx)) for idx in range(s, e)
     ]
 
     train_buffers = [
-        ReplayBuffer(
+        (idx, ReplayBuffer(
             args.inner_buffer_size,
             obs_dim,
             action_dim,
             discount_factor=0.99,
             immutable=True,
             load_from=train_buffer,
-        )
-        for train_buffer in train_buffer_paths
+        ))
+        for idx, train_buffer in train_buffer_paths
     ]
     
     s, e = map(int, task_config.test_tasks)
     test_buffer_paths = [
-        task_config.test_buffer_paths.format(idx) for idx in range(s, e)
+        (idx, task_config.test_buffer_paths.format(idx)) for idx in range(s, e)
     ]
 
     test_buffers = [
-        ReplayBuffer(
+        (idx, ReplayBuffer(
             args.inner_buffer_size,
             obs_dim,
             action_dim,
             discount_factor=0.99,
             immutable=True,
             load_from=test_buffer,
-        )
-        for test_buffer in test_buffer_paths
+        ))
+        for idx, test_buffer in test_buffer_paths
     ]
 
     return policy, vf, train_buffers, test_buffers
@@ -130,10 +135,7 @@ def get_env(args, task_config):
         traces:List = pickle.load(fp)
     with open(task_config.traces_info, 'rb') as fp:
         traces_info:List = pickle.load(fp)
-    # print("!!!!!!!!!!!!!!!!! LEN:", len(traces))
-    # for i in range(len(traces[5])):
-    #     print("!!!!!!!!!!!!!!!!! IDX:", i)
-    #     print(traces[5][i])
+
 
     return ArcEnv(traces=traces, traces_info=traces_info, include_goal=True)
 
@@ -159,10 +161,7 @@ def run(args):
         task_config = json.load(
             f, object_hook=lambda d: namedtuple("X", d.keys())(*d.values())
         )
-    # print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TASK_CONFIG:", task_config)
     env = get_env(args, task_config)
-    # print("@@@@@@@@@@@@@@ TRACES :", env.traces[5])
-    # print("@@@@@@@@@@@@@@ GOAL_DIRECTION:", env._goal_dir)
 
     policy, vf, train_task_buffers, test_task_buffers = build_networks_and_buffers(args, env, task_config)
     policy_opt, vf_opt, policy_lrs, vf_lrs = get_opts_and_lrs(args, policy, vf)
@@ -171,9 +170,10 @@ def run(args):
         if train_step_idx % args.rollout_interval == 0:
             LOG.info(f"Train step {train_step_idx}")
 
-        for train_task_idx, task_buffers in enumerate(train_task_buffers):
-            print("!!!!!!!!!!!!!!! TRAIN_TASK_IDX:", train_task_idx)
+        # import pdb; pdb.set_trace()
+        for train_task_idx, task_buffers in train_task_buffers:
             env.set_task_idx(train_task_idx)
+            # print("!!!!!!!!!!!!!TRAIN TASK IDX:", train_task_idx)
 
             inner_batch = task_buffers.sample(
                 args.inner_batch_size, return_dict=True, device=args.device
@@ -200,7 +200,6 @@ def run(args):
             with higher.innerloop_ctx(
                 policy, opt, override={"lr": policy_lrs}, copy_initial_weights=False
             ) as (f_policy, diff_policy_opt):
-                print("!!!!!!!!!!!!!! POLICY LOSS")
                 loss = policy_loss_on_batch(
                     f_policy,
                     adapted_vf,
@@ -210,7 +209,6 @@ def run(args):
                 )
 
                 diff_policy_opt.step(loss)
-                print("!!!!!!!!!!!!!! META POLICY LOSS")
                 meta_policy_loss = policy_loss_on_batch(
                     f_policy, adapted_vf, outer_batch, args.advantage_head_coef
                 )
@@ -229,11 +227,9 @@ def run(args):
         vf_opt.zero_grad()
 
         if train_step_idx % args.rollout_interval == 0:
-            for j, (test_task_idx, task_buffers) in enumerate(
-                zip(task_config.test_tasks, test_task_buffers)
-            ):
+            for test_task_idx, task_buffers in test_task_buffers:
                 env.set_task_idx(test_task_idx)
-                adapted_trajectory, adapted_reward, success = rollout_policy(policy, env)
+                adapted_trajectory, adapted_reward, success = rollout_policy(policy, env, True)
                 LOG.info(f"Task {test_task_idx} reward: {adapted_reward}")
 
 if __name__ == "__main__":

@@ -116,7 +116,6 @@ class ReplayBuffer(object):
         needs_to_load = True
         size //= skip
         if stream_to_disk:
-            print("!!!!!!!PATH:", load_from)
             name = os.path.splitext(os.path.basename(os.path.normpath(load_from)))[0]
             if os.path.exists('/scr-ssd'):
                 path = f'/scr-ssd/em7/{name}'
@@ -280,8 +279,6 @@ class ReplayBuffer(object):
             idx = np.random.randint(0, self._stored_steps - batch_size)
             idxs = slice(idx, idx + batch_size)
         else:
-            print("!!!!!!!!!!!!!!!SELF._STORED_STEPS:", self._stored_steps)
-            print("!!!!!!!!!!!!!!!BATCH_SIZE:", batch_size)
             idxs = np.array(random.sample(range(self._stored_steps), batch_size))
         #idxs = np.random.choice(self._valid, batch_size)
 

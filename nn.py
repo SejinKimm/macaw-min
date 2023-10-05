@@ -14,7 +14,6 @@ class WLinear(nn.Module):
 
         dim = 100
         self.z = nn.Parameter(torch.empty(dim).normal_(0, 1.0 / out_features))
-        print(self.z.mean(), self.z.std().item())
         self.fc = nn.Linear(dim, in_features * out_features + out_features)
         self.seq = self.fc
         self.w_idx = in_features * out_features

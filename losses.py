@@ -20,8 +20,12 @@ def policy_loss_on_batch(policy, vf, batch, adv_coef: float, inner: bool = False
 
     original_action = batch["actions"]
     action_mu, advantage_prediction = policy(batch["obs"], batch["actions"])
+    if torch.isnan(action_mu[0][0]):
+        #action_mu = torch.empty_like(action_mu).fill_(0)
+        action_mu = torch.nan_to_num(action_mu)
+        # print("!!!!!!!!!!!!!!!!!")
+        # print(action_mu)
     action_sigma = torch.empty_like(action_mu).fill_(0.2)
-    print("!!!! ACTION_MU:", action_mu)
     action_distribution = D.Normal(action_mu, action_sigma)
     action_log_probs = action_distribution.log_prob(batch["actions"]).sum(-1)
 

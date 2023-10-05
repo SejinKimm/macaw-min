@@ -12,6 +12,14 @@ minienv = gym.make('ARCLE/O2ARCv2Env-v0',render_mode=None, data_loader=MiniARCLo
 
 failure_trace = []
 
+def set_env(name):
+    for i, aa in enumerate(ARCLoader().data):
+        if aa[4]['id'] == name:
+            return arcenv
+    for i, aa in enumerate(MiniARCLoader().data):
+        if aa[4]['id'] == name:
+            return minienv
+
 def findbyname(name):
     for i, aa in enumerate(ARCLoader().data):
         if aa[4]['id'] == name:
@@ -172,15 +180,9 @@ if __name__ == "__main__":
         name, subtask, isGoal = info
         name += "_" + str(subtask)
 
-        if len(traces_info[idx][0]) >10:
-            env = minienv
-        else:
-            env = arcenv
+        env = set_env(traces_info[idx][0])
         obs_init, _ = env.reset(options= {'adaptation':False, 'prob_index':findbyname(traces_info[idx][0]), 'subprob_index': traces_info[idx][1]})
         
         task_dict[name].append((idx, obs_init))
 
-
     create_features(task_dict)
-
-    

@@ -1,0 +1,33 @@
+[2023-10-05 17:30:48,776][__main__][INFO] - Train step 250
+[2023-10-05 17:30:49,091][__main__][INFO] - Task 0 reward: 0
+[2023-10-05 17:30:49,177][__main__][INFO] - Task 1 reward: 0
+[2023-10-05 17:30:49,263][__main__][INFO] - Task 2 reward: 0
+[2023-10-05 17:30:49,349][__main__][INFO] - Task 3 reward: 0
+[2023-10-05 17:30:49,434][__main__][INFO] - Task 4 reward: 0
+[2023-10-05 17:30:49,517][__main__][INFO] - Task 5 reward: 0
+[2023-10-05 17:30:49,599][__main__][INFO] - Task 6 reward: 0
+[2023-10-05 17:30:49,682][__main__][INFO] - Task 7 reward: 0
+[2023-10-05 17:30:49,766][__main__][INFO] - Task 8 reward: 0
+[2023-10-05 17:30:49,850][__main__][INFO] - Task 9 reward: 0
+[2023-10-05 17:31:48,056][__main__][INFO] - Train step 500
+[2023-10-05 17:31:48,400][__main__][INFO] - Task 0 reward: 0
+[2023-10-05 17:31:48,487][__main__][INFO] - Task 1 reward: 0
+[2023-10-05 17:31:48,572][__main__][INFO] - Task 2 reward: 0
+[2023-10-05 17:31:48,659][__main__][INFO] - Task 3 reward: 0
+[2023-10-05 17:31:48,744][__main__][INFO] - Task 4 reward: 0
+[2023-10-05 17:31:48,829][__main__][INFO] - Task 5 reward: 0
+[2023-10-05 17:31:48,914][__main__][INFO] - Task 6 reward: 0
+[2023-10-05 17:31:48,997][__main__][INFO] - Task 7 reward: 0
+[2023-10-05 17:31:49,083][__main__][INFO] - Task 8 reward: 0
+[2023-10-05 17:31:49,167][__main__][INFO] - Task 9 reward: 0
+[2023-10-05 17:32:48,312][__main__][INFO] - Train step 750
+[2023-10-05 17:32:48,632][__main__][INFO] - Task 0 reward: 0
+[2023-10-05 17:32:48,717][__main__][INFO] - Task 1 reward: 0
+[2023-10-05 17:32:48,801][__main__][INFO] - Task 2 reward: 0
+[2023-10-05 17:32:48,887][__main__][INFO] - Task 3 reward: 0
+[2023-10-05 17:32:48,972][__main__][INFO] - Task 4 reward: 0
+[2023-10-05 17:32:49,055][__main__][INFO] - Task 5 reward: 0
+[2023-10-05 17:32:49,139][__main__][INFO] - Task 6 reward: 0
+[2023-10-05 17:32:49,228][__main__][INFO] - Task 7 reward: 0
+[2023-10-05 17:32:49,317][__main__][INFO] - Task 8 reward: 0
+[2023-10-05 17:32:49,408][__main__][INFO] - Task 9 reward: 0

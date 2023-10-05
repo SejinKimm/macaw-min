@@ -1,9 +1,9 @@
 {
     "env": "arc",
     "task_paths": "/home/sjkim/macaw-min/macaw_offline_data/arc/env_arc_train_task{}.pkl",
-    "total_tasks": 10,
-    "train_tasks": [0, 10],
-    "test_tasks": [0, 10],
+    "total_tasks": 100,
+    "train_tasks": [0, 90],
+    "test_tasks": [90, 100],
     "train_buffer_paths": "/home/sjkim/macaw-min/macaw_offline_data/arc/buffers_arc_train_{}_sub_task_0.hdf5",
     "test_buffer_paths": "/home/sjkim/macaw-min/macaw_offline_data/arc/buffers_arc_train_{}_sub_task_0.hdf5",
     "traces": "/home/sjkim/macaw-min/macaw_offline_data/test.pickle",

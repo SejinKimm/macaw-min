@@ -12,6 +12,7 @@ class ArcEnv(gym.Env):
         self.miniarcloader = MiniARCLoader()
         self.arcenv = gym.make('ARCLE/O2ARCv2Env-v0', render_mode=None, data_loader=self.arcloader, max_grid_size=(30,30), colors=10, max_episode_steps=None)
         self.miniarcenv = gym.make('ARCLE/O2ARCv2Env-v0', render_mode=None, data_loader=self.miniarcloader, max_grid_size=(30,30), colors=10, max_episode_steps=None)
+        self.env = self.arcenv
         self.traces = traces
         self.traces_info = traces_info
         self._max_episode_steps = 200
@@ -34,16 +35,19 @@ class ArcEnv(gym.Env):
     def findbyname(self, name):
         for i, aa in enumerate(self.arcloader.data):
             if aa[4]['id'] == name:
+                self.env = self.arcenv
                 return i
         for i, aa in enumerate(self.miniarcloader.data):
             if aa[4]['id'] == name:
+                self.env = self.miniarcenv
                 return i
     
     def set_task(self, task):
         self._task = task
         # self._goal_dir = self._task['direction']
-        state = self.arcenv.reset(options= {'adaptation':False, 'prob_index':self.findbyname(self.traces_info[self.idx][0]), 'subprob_index': self.traces_info[self.idx][1]})
+        state = self.env.reset(options= {'adaptation':False, 'prob_index':self.findbyname(self.traces_info[self.idx][0]), 'subprob_index': self.traces_info[self.idx][1]})
 
     def set_task_idx(self, idx):
         self.idx = idx
+        self.findbyname(self.traces_info[self.idx][0])
         self.set_task(self.traces[self.idx])

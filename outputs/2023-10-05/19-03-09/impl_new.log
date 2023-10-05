@@ -1,0 +1,121 @@
+[2023-10-05 19:04:08,695][__main__][INFO] - Train step 250
+[2023-10-05 19:04:09,018][__main__][INFO] - Task 0 reward: 0
+[2023-10-05 19:04:09,105][__main__][INFO] - Task 1 reward: 0
+[2023-10-05 19:04:09,192][__main__][INFO] - Task 2 reward: 0
+[2023-10-05 19:04:09,278][__main__][INFO] - Task 3 reward: 0
+[2023-10-05 19:04:09,368][__main__][INFO] - Task 4 reward: 0
+[2023-10-05 19:04:09,452][__main__][INFO] - Task 5 reward: 0
+[2023-10-05 19:04:09,536][__main__][INFO] - Task 6 reward: 0
+[2023-10-05 19:04:09,620][__main__][INFO] - Task 7 reward: 0
+[2023-10-05 19:04:09,708][__main__][INFO] - Task 8 reward: 0
+[2023-10-05 19:04:09,795][__main__][INFO] - Task 9 reward: 0
+[2023-10-05 19:05:09,567][__main__][INFO] - Train step 500
+[2023-10-05 19:05:09,896][__main__][INFO] - Task 0 reward: 0
+[2023-10-05 19:05:09,980][__main__][INFO] - Task 1 reward: 0
+[2023-10-05 19:05:10,065][__main__][INFO] - Task 2 reward: 0
+[2023-10-05 19:05:10,150][__main__][INFO] - Task 3 reward: 0
+[2023-10-05 19:05:10,234][__main__][INFO] - Task 4 reward: 0
+[2023-10-05 19:05:10,317][__main__][INFO] - Task 5 reward: 0
+[2023-10-05 19:05:10,400][__main__][INFO] - Task 6 reward: 0
+[2023-10-05 19:05:10,482][__main__][INFO] - Task 7 reward: 0
+[2023-10-05 19:05:10,567][__main__][INFO] - Task 8 reward: 0
+[2023-10-05 19:05:10,653][__main__][INFO] - Task 9 reward: 0
+[2023-10-05 19:06:09,261][__main__][INFO] - Train step 750
+[2023-10-05 19:06:09,577][__main__][INFO] - Task 0 reward: 0
+[2023-10-05 19:06:09,663][__main__][INFO] - Task 1 reward: 0
+[2023-10-05 19:06:09,750][__main__][INFO] - Task 2 reward: 0
+[2023-10-05 19:06:09,835][__main__][INFO] - Task 3 reward: 0
+[2023-10-05 19:06:09,921][__main__][INFO] - Task 4 reward: 0
+[2023-10-05 19:06:10,004][__main__][INFO] - Task 5 reward: 0
+[2023-10-05 19:06:10,087][__main__][INFO] - Task 6 reward: 0
+[2023-10-05 19:06:10,172][__main__][INFO] - Task 7 reward: 0
+[2023-10-05 19:06:10,256][__main__][INFO] - Task 8 reward: 0
+[2023-10-05 19:06:10,343][__main__][INFO] - Task 9 reward: 0
+[2023-10-05 19:07:11,172][__main__][INFO] - Train step 1000
+[2023-10-05 19:07:11,496][__main__][INFO] - Task 0 reward: 0
+[2023-10-05 19:07:11,582][__main__][INFO] - Task 1 reward: 0
+[2023-10-05 19:07:11,667][__main__][INFO] - Task 2 reward: 0
+[2023-10-05 19:07:11,753][__main__][INFO] - Task 3 reward: 0
+[2023-10-05 19:07:11,838][__main__][INFO] - Task 4 reward: 0
+[2023-10-05 19:07:11,921][__main__][INFO] - Task 5 reward: 0
+[2023-10-05 19:07:12,004][__main__][INFO] - Task 6 reward: 0
+[2023-10-05 19:07:12,088][__main__][INFO] - Task 7 reward: 0
+[2023-10-05 19:07:12,173][__main__][INFO] - Task 8 reward: 0
+[2023-10-05 19:07:12,259][__main__][INFO] - Task 9 reward: 0
+[2023-10-05 19:08:11,138][__main__][INFO] - Train step 1250
+[2023-10-05 19:08:11,456][__main__][INFO] - Task 0 reward: 0
+[2023-10-05 19:08:11,541][__main__][INFO] - Task 1 reward: 0
+[2023-10-05 19:08:11,627][__main__][INFO] - Task 2 reward: 0
+[2023-10-05 19:08:11,714][__main__][INFO] - Task 3 reward: 0
+[2023-10-05 19:08:11,801][__main__][INFO] - Task 4 reward: 0
+[2023-10-05 19:08:11,884][__main__][INFO] - Task 5 reward: 0
+[2023-10-05 19:08:11,967][__main__][INFO] - Task 6 reward: 0
+[2023-10-05 19:08:12,049][__main__][INFO] - Task 7 reward: 0
+[2023-10-05 19:08:12,134][__main__][INFO] - Task 8 reward: 0
+[2023-10-05 19:08:12,219][__main__][INFO] - Task 9 reward: 0
+[2023-10-05 19:09:11,005][__main__][INFO] - Train step 1500
+[2023-10-05 19:09:11,319][__main__][INFO] - Task 0 reward: 0
+[2023-10-05 19:09:11,403][__main__][INFO] - Task 1 reward: 0
+[2023-10-05 19:09:11,488][__main__][INFO] - Task 2 reward: 0
+[2023-10-05 19:09:11,573][__main__][INFO] - Task 3 reward: 0
+[2023-10-05 19:09:11,657][__main__][INFO] - Task 4 reward: 0
+[2023-10-05 19:09:11,741][__main__][INFO] - Task 5 reward: 0
+[2023-10-05 19:09:11,824][__main__][INFO] - Task 6 reward: 0
+[2023-10-05 19:09:11,907][__main__][INFO] - Task 7 reward: 0
+[2023-10-05 19:09:11,991][__main__][INFO] - Task 8 reward: 0
+[2023-10-05 19:09:12,076][__main__][INFO] - Task 9 reward: 0
+[2023-10-05 19:10:11,942][__main__][INFO] - Train step 1750
+[2023-10-05 19:10:12,341][__main__][INFO] - Task 0 reward: 0
+[2023-10-05 19:10:12,427][__main__][INFO] - Task 1 reward: 0
+[2023-10-05 19:10:12,514][__main__][INFO] - Task 2 reward: 0
+[2023-10-05 19:10:12,599][__main__][INFO] - Task 3 reward: 0
+[2023-10-05 19:10:12,686][__main__][INFO] - Task 4 reward: 0
+[2023-10-05 19:10:12,772][__main__][INFO] - Task 5 reward: 0
+[2023-10-05 19:10:12,856][__main__][INFO] - Task 6 reward: 0
+[2023-10-05 19:10:12,940][__main__][INFO] - Task 7 reward: 0
+[2023-10-05 19:10:13,026][__main__][INFO] - Task 8 reward: 0
+[2023-10-05 19:10:13,112][__main__][INFO] - Task 9 reward: 0
+[2023-10-05 19:11:12,028][__main__][INFO] - Train step 2000
+[2023-10-05 19:11:12,346][__main__][INFO] - Task 0 reward: 0
+[2023-10-05 19:11:12,431][__main__][INFO] - Task 1 reward: 0
+[2023-10-05 19:11:12,517][__main__][INFO] - Task 2 reward: 0
+[2023-10-05 19:11:12,603][__main__][INFO] - Task 3 reward: 0
+[2023-10-05 19:11:12,689][__main__][INFO] - Task 4 reward: 0
+[2023-10-05 19:11:12,776][__main__][INFO] - Task 5 reward: 0
+[2023-10-05 19:11:12,860][__main__][INFO] - Task 6 reward: 0
+[2023-10-05 19:11:12,943][__main__][INFO] - Task 7 reward: 0
+[2023-10-05 19:11:13,029][__main__][INFO] - Task 8 reward: 0
+[2023-10-05 19:11:13,115][__main__][INFO] - Task 9 reward: 0
+[2023-10-05 19:12:11,940][__main__][INFO] - Train step 2250
+[2023-10-05 19:12:12,256][__main__][INFO] - Task 0 reward: 0
+[2023-10-05 19:12:12,341][__main__][INFO] - Task 1 reward: 0
+[2023-10-05 19:12:12,425][__main__][INFO] - Task 2 reward: 0
+[2023-10-05 19:12:12,510][__main__][INFO] - Task 3 reward: 0
+[2023-10-05 19:12:12,595][__main__][INFO] - Task 4 reward: 0
+[2023-10-05 19:12:12,679][__main__][INFO] - Task 5 reward: 0
+[2023-10-05 19:12:12,762][__main__][INFO] - Task 6 reward: 0
+[2023-10-05 19:12:12,846][__main__][INFO] - Task 7 reward: 0
+[2023-10-05 19:12:12,930][__main__][INFO] - Task 8 reward: 0
+[2023-10-05 19:12:13,015][__main__][INFO] - Task 9 reward: 0
+[2023-10-05 19:13:12,276][__main__][INFO] - Train step 2500
+[2023-10-05 19:13:12,599][__main__][INFO] - Task 0 reward: 0
+[2023-10-05 19:13:12,685][__main__][INFO] - Task 1 reward: 0
+[2023-10-05 19:13:12,773][__main__][INFO] - Task 2 reward: 0
+[2023-10-05 19:13:12,859][__main__][INFO] - Task 3 reward: 0
+[2023-10-05 19:13:12,944][__main__][INFO] - Task 4 reward: 0
+[2023-10-05 19:13:13,027][__main__][INFO] - Task 5 reward: 0
+[2023-10-05 19:13:13,110][__main__][INFO] - Task 6 reward: 0
+[2023-10-05 19:13:13,194][__main__][INFO] - Task 7 reward: 0
+[2023-10-05 19:13:13,280][__main__][INFO] - Task 8 reward: 0
+[2023-10-05 19:13:13,365][__main__][INFO] - Task 9 reward: 0
+[2023-10-05 19:14:13,710][__main__][INFO] - Train step 2750
+[2023-10-05 19:14:14,049][__main__][INFO] - Task 0 reward: 0
+[2023-10-05 19:14:14,135][__main__][INFO] - Task 1 reward: 0
+[2023-10-05 19:14:14,220][__main__][INFO] - Task 2 reward: 0
+[2023-10-05 19:14:14,305][__main__][INFO] - Task 3 reward: 0
+[2023-10-05 19:14:14,390][__main__][INFO] - Task 4 reward: 0
+[2023-10-05 19:14:14,474][__main__][INFO] - Task 5 reward: 0
+[2023-10-05 19:14:14,557][__main__][INFO] - Task 6 reward: 0
+[2023-10-05 19:14:14,641][__main__][INFO] - Task 7 reward: 0
+[2023-10-05 19:14:14,727][__main__][INFO] - Task 8 reward: 0
+[2023-10-05 19:14:14,813][__main__][INFO] - Task 9 reward: 0

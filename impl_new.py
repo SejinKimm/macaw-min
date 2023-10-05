@@ -25,9 +25,9 @@ def rollout_policy(policy: MLP, env, render: bool = False) -> List[Experience]:
     trajectory = []
     idx = env.get_idx()
     # print("!!!!!!!!!!!!!ROLLOUT POLICY IDX:", idx)
-    state = env.arcenv.reset(options= {'adaptation':False, 'prob_index':env.findbyname(env.traces_info[idx][0]), 'subprob_index': env.traces_info[idx][1]})
+    state = env.env.reset(options= {'adaptation':False, 'prob_index':env.findbyname(env.traces_info[idx][0]), 'subprob_index': env.traces_info[idx][1]})
     if render:
-        env.arcenv.render()
+        env.env.render()
     done = False
     total_reward = 0
     episode_t = 0
@@ -51,13 +51,13 @@ def rollout_policy(policy: MLP, env, render: bool = False) -> List[Experience]:
         action['operation'] = np_action
         action['selection'] = np.zeros((30,30), dtype=np.bool_)
 
-        next_state, reward, done, _, info_dict = env.arcenv.step(action)
+        next_state, reward, done, _, info_dict = env.env.step(action)
 
         if "success" in info_dict and info_dict["success"]:
             success = True
 
         if render:
-            env.arcenv.render()
+            env.env.render()
         trajectory.append(Experience(state, np_action, next_state, reward, done))
         state = next_state
         total_reward += reward
@@ -135,7 +135,6 @@ def get_env(args, task_config):
         traces:List = pickle.load(fp)
     with open(task_config.traces_info, 'rb') as fp:
         traces_info:List = pickle.load(fp)
-
 
     return ArcEnv(traces=traces, traces_info=traces_info, include_goal=True)
 

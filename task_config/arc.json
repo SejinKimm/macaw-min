@@ -6,6 +6,6 @@
     "test_tasks": [0, 10],
     "train_buffer_paths": "/home/sjkim/macaw-min/macaw_offline_data/arc/buffers_arc_train_{}_sub_task_0.hdf5",
     "test_buffer_paths": "/home/sjkim/macaw-min/macaw_offline_data/arc/buffers_arc_train_{}_sub_task_0.hdf5",
-    "traces": "/home/sjkim/macaw-min/test.pickle",
-    "traces_info": "/home/sjkim/macaw-min/test_info.pickle"
+    "traces": "/home/sjkim/macaw-min/macaw_offline_data/test.pickle",
+    "traces_info": "/home/sjkim/macaw-min/macaw_offline_data/test_info.pickle"
 }

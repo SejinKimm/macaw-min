@@ -2,7 +2,8 @@
 
 This repo contains a simplified implementation of the MACAW algorithm (full code [here](https://github.com/eric-mitchell/macaw)) for easier inspection and extension.
 
-Run the code with `python impl.py`.
+`source ~/arcle_env/bin/activate`
+Run the code with `python train.py` and `python test.py`.
 
 ## Overview
 
